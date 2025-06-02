@@ -2,89 +2,89 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora</title>
-    <!-- Bootstrap CSS -->
-    <link href="./lib/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculadora BS5</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="./lib/bootstrap-5.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="./css/styles.css">
+    <link href="css/styles.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<body class="bg-light">
+    <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h2 class="text-center mb-0">Calculadora</h2>
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h1 class="h4 text-center mb-0">Calculadora BS5</h1>
                     </div>
                     <div class="card-body">
-                        <!-- Pantalla de la calculadora -->
-                        <div class="mb-3">
-                            <input type="text" id="display" class="form-control text-end fs-4" readonly>
-                            <div id="operation-display" class="text-end text-muted mt-1"></div>
+                        <!-- Pantalla -->
+                        <div class="mb-4">
+                            <input type="text" id="display" class="form-control form-control-lg text-end mb-1" readonly>
+                            <div id="operation" class="text-end text-muted small"></div>
                         </div>
                         
-                        <!-- Botones de la calculadora -->
+                        <!-- Teclado -->
                         <div class="row g-2">
-                            <!-- Primera fila -->
+                            <!-- Fila 1 -->
                             <div class="col-3">
-                                <button class="btn btn-danger w-100" onclick="clearDisplay()">C</button>
+                                <button class="btn btn-danger w-100 py-2" onclick="clearAll()">C</button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(7)">7</button>
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('7')">7</button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(8)">8</button>
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('8')">8</button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(9)">9</button>
-                            </div>
-                            
-                            <!-- Segunda fila -->
-                            <div class="col-3">
-                                <button class="btn btn-warning w-100" onclick="setOperation('+')">+</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(4)">4</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(5)">5</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(6)">6</button>
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('9')">9</button>
                             </div>
                             
-                            <!-- Tercera fila -->
+                            <!-- Fila 2 -->
                             <div class="col-3">
-                                <button class="btn btn-warning w-100" onclick="setOperation('-')">-</button>
+                                <button class="btn btn-warning w-100 py-2" onclick="setOperation('+')">+</button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(1)">1</button>
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('4')">4</button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(2)">2</button>
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('5')">5</button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(3)">3</button>
-                            </div>
-                            
-                            <!-- Cuarta fila -->
-                            <div class="col-3">
-                                <button class="btn btn-warning w-100" onclick="setOperation('*')">×</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendNumber(0)">0</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-secondary w-100" onclick="appendDecimal()">.</button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-warning w-100" onclick="setOperation('/')">÷</button>
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('6')">6</button>
                             </div>
                             
-                            <!-- Quinta fila -->
+                            <!-- Fila 3 -->
+                            <div class="col-3">
+                                <button class="btn btn-warning w-100 py-2" onclick="setOperation('-')">-</button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('1')">1</button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('2')">2</button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('3')">3</button>
+                            </div>
+                            
+                            <!-- Fila 4 -->
+                            <div class="col-3">
+                                <button class="btn btn-warning w-100 py-2" onclick="setOperation('*')">×</button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendToDisplay('0')">0</button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-secondary w-100 py-2" onclick="appendDecimal()">.</button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-warning w-100 py-2" onclick="setOperation('/')">÷</button>
+                            </div>
+                            
+                            <!-- Fila 5 -->
                             <div class="col-12">
-                                <button class="btn btn-success w-100 py-2" onclick="calculate()">=</button>
+                                <button class="btn btn-success w-100 py-3" onclick="calculate()">=</button>
                             </div>
                         </div>
                     </div>
@@ -93,9 +93,9 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="./lib/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-    <!-- JavaScript de la calculadora -->
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="./lib/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Lógica de la calculadora -->
     <script src="./js/calculadora.js"></script>
 </body>
 </html>

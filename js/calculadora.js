@@ -1,135 +1,149 @@
-// Variables para almacenar los valores y operaciones
-let firstNumber = null;
-let secondNumber = null;
+// Variables de estado
+let firstOperand = null;
+let secondOperand = null;
 let currentOperation = null;
-let shouldResetDisplay = false;
+let resetScreen = false;
 
 // Elementos del DOM
 const display = document.getElementById('display');
-const operationDisplay = document.getElementById('operation-display');
+const operationDisplay = document.getElementById('operation');
 
-// Función para agregar un número al display
-function appendNumber(number) {
-    if (shouldResetDisplay) {
+// Función para agregar contenido al display
+function appendToDisplay(value) {
+    if (resetScreen) {
         display.value = '';
-        shouldResetDisplay = false;
+        resetScreen = false;
     }
     
     // Evitar múltiples ceros al inicio
-    if (display.value === '0' && number === 0) {
-        return;
-    }
+    if (display.value === '0' && value === '0') return;
     
-    // Reemplazar el cero inicial si se presiona otro número
-    if (display.value === '0' && number !== 0) {
+    // Reemplazar cero inicial si se ingresa otro número
+    if (display.value === '0' && value !== '.') {
         display.value = '';
     }
     
-    display.value += number;
+    display.value += value;
 }
 
-// Función para agregar un punto decimal
+// Función para agregar punto decimal
 function appendDecimal() {
-    if (shouldResetDisplay) {
+    if (resetScreen) {
         display.value = '0.';
-        shouldResetDisplay = false;
+        resetScreen = false;
         return;
     }
     
-    if (display.value.includes('.')) {
-        return; // No permitir múltiples puntos decimales
-    }
+    if (display.value.includes('.')) return;
     
     if (display.value === '') {
-        display.value = '0.'; // Si está vacío, agregar 0. primero
+        display.value = '0.';
     } else {
         display.value += '.';
     }
 }
 
-// Función para establecer la operación
-function setOperation(operation) {
-    if (display.value === '' && firstNumber === null) {
-        return; // No hacer nada si no hay número ingresado
-    }
+// Función para establecer operación
+function setOperation(operator) {
+    if (display.value === '' && firstOperand === null) return;
     
-    // Si ya hay una operación pendiente, calcular primero
-    if (currentOperation !== null && !shouldResetDisplay) {
+    // Si hay operación pendiente, calcular primero
+    if (currentOperation !== null && !resetScreen) {
         calculate();
     }
     
-    firstNumber = parseFloat(display.value);
-    currentOperation = operation;
-    shouldResetDisplay = true;
+    firstOperand = parseFloat(display.value);
+    currentOperation = operator;
+    resetScreen = true;
     
-    // Mostrar la operación seleccionada
-    operationDisplay.textContent = `${firstNumber} ${getOperationSymbol(currentOperation)}`;
+    // Mostrar operación actual
+    operationDisplay.textContent = `${firstOperand} ${getOperationSymbol(currentOperation)}`;
 }
 
-// Función para realizar el cálculo
+// Función para calcular resultado
 function calculate() {
-    if (currentOperation === null || shouldResetDisplay) {
-        return; // No hay operación pendiente o no se ha ingresado el segundo número
-    }
+    if (currentOperation === null || resetScreen) return;
     
     if (display.value === '') {
-        display.value = '0'; // Asumir 0 si no se ingresa segundo número
+        display.value = '0';
     }
     
-    secondNumber = parseFloat(display.value);
+    secondOperand = parseFloat(display.value);
     
     // Validar división por cero
-    if (currentOperation === '/' && secondNumber === 0) {
-        alert("No se puede dividir por cero");
-        clearDisplay();
+    if (currentOperation === '/' && secondOperand === 0) {
+        alert("Error: División por cero");
+        clearAll();
         return;
     }
     
     let result;
     switch (currentOperation) {
         case '+':
-            result = firstNumber + secondNumber;
+            result = firstOperand + secondOperand;
             break;
         case '-':
-            result = firstNumber - secondNumber;
+            result = firstOperand - secondOperand;
             break;
         case '*':
-            result = firstNumber * secondNumber;
+            result = firstOperand * secondOperand;
             break;
         case '/':
-            result = firstNumber / secondNumber;
+            result = firstOperand / secondOperand;
             break;
         default:
             return;
     }
     
-    // Mostrar el resultado
-    display.value = result.toString();
+    // Mostrar resultado
+    display.value = roundResult(result);
     operationDisplay.textContent = '';
     
-    // Resetear variables para próximas operaciones
-    firstNumber = result;
+    // Preparar para siguiente operación
+    firstOperand = parseFloat(display.value);
     currentOperation = null;
-    shouldResetDisplay = true;
+    resetScreen = true;
 }
 
-// Función para limpiar la calculadora
-function clearDisplay() {
+// Función para limpiar todo
+function clearAll() {
     display.value = '';
     operationDisplay.textContent = '';
-    firstNumber = null;
-    secondNumber = null;
+    firstOperand = null;
+    secondOperand = null;
     currentOperation = null;
-    shouldResetDisplay = false;
+    resetScreen = false;
 }
 
-// Función auxiliar para obtener el símbolo de la operación
-function getOperationSymbol(operation) {
-    switch (operation) {
-        case '+': return '+';
-        case '-': return '-';
-        case '*': return '×';
-        case '/': return '÷';
-        default: return '';
-    }
+// Función auxiliar para redondear resultados
+function roundResult(num) {
+    return Math.round(num * 100000) / 100000; // Redondear a 5 decimales
 }
+
+// Función auxiliar para obtener símbolo de operación
+function getOperationSymbol(op) {
+    const symbols = {
+        '+': '+',
+        '-': '-',
+        '*': '×',
+        '/': '÷'
+    };
+    return symbols[op] || '';
+}
+
+// Evento para teclado físico
+document.addEventListener('keydown', (e) => {
+    if (/[0-9]/.test(e.key)) {
+        appendToDisplay(e.key);
+    } else if (e.key === '.') {
+        appendDecimal();
+    } else if (['+', '-', '*', '/'].includes(e.key)) {
+        setOperation(e.key);
+    } else if (e.key === 'Enter') {
+        calculate();
+    } else if (e.key === 'Escape') {
+        clearAll();
+    } else if (e.key === 'Backspace') {
+        display.value = display.value.slice(0, -1);
+    }
+});
