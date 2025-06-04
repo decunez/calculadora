@@ -1,40 +1,28 @@
-/* Estilos personalizados para Bootstrap 5 */
 
-/* Ajustes para la pantalla */
 #display {
     font-size: 2rem;
     height: 70px;
     background-color: #f8f9fa;
 }
-
-/* Ajustes para los botones */
 .btn {
     font-weight: 500;
     transition: all 0.2s;
 }
-
 .btn-secondary {
     background-color: #e9ecef;
     color: #212529;
 }
-
 .btn-warning {
     color: rgb(255, 255, 255);
 }
-
-/* Efecto hover para mejor feedback */
 .btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
-/* Sombra para la tarjeta */
 .card {
     border: none;
     overflow: hidden;
 }
-
-/* Ajustes responsive adicionales */
 @media (max-width: 576px) {
     #display {
         font-size: 1.5rem;
