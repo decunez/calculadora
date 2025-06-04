@@ -1,10 +1,8 @@
-// Variables de estado
 let firstOperand = null;
 let secondOperand = null;
 let currentOperation = null;
 let resetScreen = false;
 
-// Elementos del DOM
 const display = document.getElementById('display');
 const operationDisplay = document.getElementById('operation');
 
